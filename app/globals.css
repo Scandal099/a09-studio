@@ -1063,11 +1063,31 @@ img {
 
 @media (orientation: portrait) and (max-width: 64rem) {
   .wall-section {
-    min-block-size: clamp(20rem, 46svh, 28rem);
+    min-block-size: 0;
+    display: grid;
+    align-items: stretch;
+  }
+
+  .wall-picture {
+    position: relative;
+    inset: auto;
+    aspect-ratio: 667 / 409;
+    height: auto;
+    overflow: hidden;
   }
 
   .wall-img {
-    object-position: 50% 24%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .wall-scrim {
+    display: none;
+  }
+
+  .wall-content {
+    padding-block: 1.75rem 2.25rem;
+    background-color: var(--ink);
   }
 }
 
