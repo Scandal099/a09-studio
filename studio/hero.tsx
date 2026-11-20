@@ -253,7 +253,7 @@ export function Hero({ lang, onOpenBrief }: HeroProps) {
             <h1 id="hero-title" className="hero-title">
               {t.titleLines.map((line) => (
                 <span key={line} className="hero-title-line">
-                  {line}
+                  <span className="hero-title-inner">{line}</span>
                 </span>
               ))}
             </h1>

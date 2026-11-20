@@ -245,9 +245,9 @@ function WallStatement({ lang }: { lang: Lang }) {
       <picture className="wall-picture">
         <source
           media="(orientation: portrait) and (max-width: 64rem)"
-          srcSet={withBasePath("/art/wall-portrait.webp")}
-          width={800}
-          height={1421}
+          srcSet={withBasePath("/art/wall.webp")}
+          width={667}
+          height={409}
         />
         <img
           src={withBasePath("/art/wall-wide.webp")}
@@ -520,6 +520,49 @@ export default function Studio({
       metaDesc.setAttribute("content", t.meta.description);
     }
   }, [lang, t.meta.title, t.meta.description]);
+
+  useEffect(() => {
+    if (
+      typeof window === "undefined" ||
+      !window.matchMedia("(prefers-reduced-motion: no-preference)").matches
+    ) {
+      return;
+    }
+
+    const supportsScrollDriven =
+      typeof CSS !== "undefined" &&
+      CSS.supports("(animation-timeline: view()) and (animation-range: entry)");
+
+    if (supportsScrollDriven) {
+      return;
+    }
+
+    const targets = document.querySelectorAll<HTMLElement>(
+      ".format-row, .slot-card, .process-step, .guarantee-item, .contact-title, .footer-wordmark"
+    );
+    if (targets.length === 0) return;
+
+    document.documentElement.classList.add("io-reveal-ready");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-revealed");
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" }
+    );
+
+    targets.forEach((el) => observer.observe(el));
+
+    return () => {
+      observer.disconnect();
+      document.documentElement.classList.remove("io-reveal-ready");
+    };
+  }, []);
 
   function handleLangChange(nextLang: Lang) {
     if (nextLang === lang) return;
