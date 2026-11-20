@@ -11,11 +11,11 @@ export interface LegalInfo {
 
 /**
  * КОНТАКТЫ И РЕКВИЗИТЫ СТУДИИ A/09
- * Замените значения ниже на ваши реальные контакты перед публикацией:
- * - email: рабочий адрес для заявок и запросов по 152-ФЗ / GDPR
- * - TELEGRAM_HANDLE: логин в Telegram без символа "@"
- * - WHATSAPP_NUMBER: укажите номер (например, "79991234567"), чтобы показать WhatsApp
- * - calUrl: ссылка на 15-минутный созвон (EN-версия)
+ * Замените значения ниже на ваши реальные контакты перед запуском рекламы:
+ * - email: ваш рабочий email для заявок и запросов по 152-ФЗ
+ * - TELEGRAM_HANDLE: ваш логин в Telegram без символа "@"
+ * - WHATSAPP_NUMBER: укажите номер (например, "79991234567"), чтобы показать кнопку WhatsApp
+ * - calUrl: ссылка на короткий созвон (для EN-версии, можно оставить пустой)
  */
 const TELEGRAM_HANDLE = "a09_studio";
 // Укажите реальный номер, например "79991234567", чтобы кнопка WhatsApp появилась на сайте
@@ -30,20 +30,20 @@ export const studioContact = {
   calUrl: "https://cal.com/a09-studio/15min",
   legal: {
     ru: {
-      // Подставьте ФИО ИП и ИНН перед публикацией
-      entity: "Веб-студия A/09 · ИП на УСН (без НДС)",
-      taxNote: "Договор, безнал, ЭДО, NDA",
+      // Подставьте ваши ФИО и ИНН самозанятого перед публикацией
+      entity: "Студия A/09 · Самозанятый (НПД)",
+      taxNote: "Простой договор и официальный чек «Мой налог»",
       operatorNote:
-        "Оператор ПДн: Веб-студия A/09 · полные реквизиты ИП указываются в договоре · запросы по данным: hello@a09.studio",
-      location: "Москва (UTC+3) · РФ и Европа",
+        "Оператор ПДн: Студия A/09 (самозанятый, плательщик НПД) · реквизиты указываются в договоре · запросы по данным: hello@a09.studio",
+      location: "Работаю с локальным бизнесом по РФ",
     },
     en: {
-      // Fill in registered entity details before production launch
-      entity: "A/09 Web Studio",
-      taxNote: "B2B contract, EU/INTL invoicing, NDA",
+      // Fill in your legal details before production launch
+      entity: "A/09 Studio · Independent",
+      taxNote: "Simple written agreement & payment receipt",
       operatorNote:
-        "Data Controller: A/09 Web Studio · registered entity details are stated in the client agreement · privacy inquiries: hello@a09.studio",
-      location: "CET (UTC+1) · Remote across Europe",
+        "Data Controller: A/09 Studio · details stated in the project agreement · privacy inquiries: hello@a09.studio",
+      location: "Remote · Local & small business landing pages",
     },
   } satisfies Record<Lang, LegalInfo>,
 } as const;
@@ -81,23 +81,23 @@ export interface CaseMetric {
  * СЛОТЫ ПОРТФОЛИО И РЕАЛЬНЫЕ КЕЙСЫ
  *
  * По умолчанию все 3 слота имеют `status: "open"`.
- * Когда появится реальный клиентский проект, поменяйте `status` на `"published"`
+ * Когда сделаете первый реальный проект, поменяйте `status` на `"published"`
  * и заполните опциональные поля:
  *
  * {
  *   id: "01",
  *   status: "published",
- *   formatId: "start",
- *   category: "Клиника",
- *   title: "Основа — имплантология",
- *   terms: "Запущен за 12 дней · 2026",
- *   client: "Клиника «Основа»",
+ *   formatId: "system",
+ *   category: "Детейлинг",
+ *   title: "Студия оклейки авто",
+ *   terms: "Запущен за 9 дней · 2026",
+ *   client: "FORMA Detailing",
  *   year: "2026",
- *   image: "/cases/osnova.webp",
- *   imageAlt: "Главный экран лендинга клиники Основа",
- *   liveUrl: "https://osnova-clinic.ru",
- *   metrics: [{ label: "Конверсия", value: "6.4%" }, { label: "LCP", value: "0.9s" }],
- *   summary: "Пересобрали оффер и прайс под Директ — стоимость лида снизилась на 34%.",
+ *   image: "/cases/detailing.webp",
+ *   imageAlt: "Главный экран лендинга детейлинг-студии",
+ *   liveUrl: "https://example.ru",
+ *   metrics: [{ label: "Запуск", value: "9 дней" }],
+ *   summary: "Собрали понятный лендинг с ценами и записью в Telegram прямо с телефона.",
  * }
  */
 export interface CaseSlot {
@@ -258,12 +258,12 @@ export interface SiteContent {
 export const content: Record<Lang, SiteContent> = {
   ru: {
     meta: {
-      title: "A/09 — Лендинги и сайты для бизнеса",
+      title: "A/09 — Лендинги для локального бизнеса",
       description:
-        "Лендинги под ключ от 45\u00A0000\u00A0₽ за 10 дней и сайты под запрос. Договор, ЭДО, аналитика и 100% прав на код.",
+        "Делаю понятные лендинги для малого бизнеса в вашем городе от 25\u00A0000\u00A0₽ за 5–12 дней. Мобильная версия, заявки в Telegram, самозанятость и чек.",
     },
     nav: {
-      descriptor: "ВЕБ-СТУДИЯ",
+      descriptor: "ЛЕНДИНГИ",
       links: {
         formats: "Форматы",
         work: "Слоты",
@@ -277,87 +277,87 @@ export const content: Record<Lang, SiteContent> = {
       langLabel: "Выбор языка",
     },
     hero: {
-      kicker: "Лендинги под ключ · сайты под запрос",
-      titleLines: ["Лендинги,", "которые приводят", "клиентов."],
-      lead: "Малому бизнесу — быстрый запуск под рекламу. Компаниям — чистая система с CRM и аналитикой.",
+      kicker: "Лендинги для локального бизнеса",
+      titleLines: ["Лендинги", "для бизнеса", "в вашем городе."],
+      lead: "Помогаю локальным студиям, сервисам и мастерам получать заявки с телефона и рекламы.",
       primaryCta: "Написать в Telegram",
       secondaryCta: "Оставить заявку",
       metrics: [
-        { value: "от 45\u00A0000\u00A0₽", label: "старт" },
-        { value: "от 10 дней", label: "запуск" },
-        { value: "Договор · 50/50", label: "все права ваши" },
+        { value: "от 25\u00A0000\u00A0₽", label: "старт" },
+        { value: "5–12 дней", label: "запуск" },
+        { value: "Самозанятость", label: "договор и чек" },
       ],
-      visualAlt: "Сложенная металлическая лента — визуальный знак студии A/09",
+      visualAlt: "Сложенная металлическая лента — визуальный знак A/09",
     },
     formats: {
       eyebrow: "01 / Форматы",
-      title: "Что делаем.",
+      title: "Что делаю.",
       items: [
         {
           id: "start",
-          name: "Лендинг · Старт",
-          tagline: "Малому бизнесу под рекламу и заявки",
-          price: "от 45\u00A0000\u00A0₽",
-          timeline: "10–14 дней",
+          name: "Лендинг · Визитка",
+          tagline: "Для частного мастера или одной услуги в городе",
+          price: "от 25\u00A0000\u00A0₽",
+          timeline: "5–7 дней",
           details:
-            "Поможем с текстами, сделаем мобильную версию, подключим Метрику и заявки в Telegram.",
-          tags: ["Тексты и дизайн", "Мобилка + 4G", "Заявки в Telegram"],
+            "4–5 понятных экранов: чем занимаетесь, цены, примеры работ и кнопка записи в Telegram или по телефону.",
+          tags: ["Мобильная версия", "Заявки в Telegram", "Готов за неделю"],
         },
         {
           id: "system",
           flagship: true,
-          badge: "Флагман",
-          name: "Лендинг · Система",
-          tagline: "Компаниям и B2B под запуск продукта",
-          price: "от 140\u00A0000\u00A0₽",
-          timeline: "2–4 недели",
+          badge: "Основной",
+          name: "Лендинг · Под рекламу",
+          tagline: "Для локального бизнеса: сервис, студия, клиника, ремонт",
+          price: "от 45\u00A0000\u00A0₽",
+          timeline: "7–12 дней",
           details:
-            "Прототип, дизайн-система в Figma, код на Next.js, CRM и аналитика. Легко растёт в большой сайт.",
-          tags: ["Figma + Next.js", "CRM и аналитика", "На вырост"],
+            "Помогу с текстами, сделаю чистый дизайн под телефон, подключу Яндекс.Метрику и заявки сразу в Telegram.",
+          tags: ["Помощь с текстами", "Яндекс.Метрика", "Заявки в Telegram"],
         },
         {
           id: "custom",
-          badge: "Под запрос",
-          name: "Сайт под запрос",
-          tagline: "Многостраничник, редизайн или админка",
-          price: "от 260\u00A0000\u00A0₽",
-          timeline: "от 4 недель",
+          badge: "Обновление",
+          name: "Редизайн лендинга",
+          tagline: "Если старый сайт устарел и неудобен на телефоне",
+          price: "от 35\u00A0000\u00A0₽",
+          timeline: "7–10 дней",
           details:
-            "Индивидуальная архитектура, headless CMS, сохранение SEO и перенос на ваши серверы.",
-          tags: ["Headless CMS", "301 SEO-перенос", "Серверы в РФ"],
+            "Пересоберу ваш одностраничник с нуля: понятная структура, современный вид и быстрая загрузка на мобильном.",
+          tags: ["Новый дизайн", "Скорость на 4G", "Перенос на домен"],
         },
       ],
       included:
-        "В каждом проекте: мобильная версия · скорость < 1.2 сек · аналитика · все исходники ваши",
+        "В каждом лендинге: мобильная версия · быстрая загрузка · заявки в Telegram · все файлы и доступы ваши",
       ctaLabel: "Обсудить формат",
     },
     work: {
       eyebrow: "02 / Кейсы",
       title: "Стартовые слоты.",
-      lead: "Студия новая — выдуманных концептов не держим. Открыты 3 слота на стартовых условиях.",
+      lead: "Студия молодая — выдуманных кейсов не держу. Беру первые 3 локальных проекта на стартовых условиях.",
       slots: [
         {
           id: "01",
           status: "open",
-          formatId: "start",
-          category: "Малый бизнес",
-          title: "Лендинг под рекламу",
+          formatId: "system",
+          category: "Авто и ремонт",
+          title: "Детейлинг, автосервис, ремонт",
           terms: "−15% за кейс · от 38\u00A0250\u00A0₽",
         },
         {
           id: "02",
           status: "open",
-          formatId: "system",
-          category: "B2B и продукт",
-          title: "Запуск направления",
-          terms: "Прямая работа основателей · NDA или −15%",
+          formatId: "start",
+          category: "Бьюти и мастера",
+          title: "Салон, барбершоп, частный мастер",
+          terms: "−15% за кейс · от 21\u00A0250\u00A0₽",
         },
         {
           id: "03",
           status: "open",
           formatId: "custom",
-          category: "Редизайн / сайт",
-          title: "Обновление под рост",
+          category: "Локальный бизнес",
+          title: "Обновление старого лендинга",
           terms: "Бесплатный разбор текущего сайта",
         },
       ],
@@ -365,7 +365,7 @@ export const content: Record<Lang, SiteContent> = {
       publishedCta: "Открыть сайт",
     },
     statement: {
-      kicker: "A/09 · БЕЗ ЛИШНЕГО",
+      kicker: "A/09 · ДЛЯ ЛОКАЛЬНОГО БИЗНЕСА",
       title: "Понятно с телефона за 5 секунд.",
       alt: "Трафарет A/09 на бетонной стене",
     },
@@ -377,60 +377,60 @@ export const content: Record<Lang, SiteContent> = {
           number: "01",
           duration: "1 день",
           title: "Созвон",
-          text: "Разбираем задачу, фиксируем цену и срок.",
+          text: "Обсуждаем услуги, фиксируем цену и срок.",
         },
         {
           number: "02",
-          duration: "2–4 дня",
-          title: "Прототип",
-          text: "Пишем тексты и структуру сами.",
+          duration: "2–3 дня",
+          title: "Структура",
+          text: "Помогаю с текстами и порядком блоков.",
         },
         {
           number: "03",
-          duration: "4–6 дней",
+          duration: "3–4 дня",
           title: "Дизайн",
           text: "Сначала первый экран, затем весь сайт.",
         },
         {
           number: "04",
-          duration: "4–6 дней",
+          duration: "2–4 дня",
           title: "Запуск",
-          text: "Код, мобилка, аналитика, все права ваши.",
+          text: "Вёрстка, мобилка, заявки в Telegram.",
         },
       ],
       guarantees: [
         { value: "50 / 50", label: "поэтапная оплата" },
-        { value: "Договор · ЭДО · NDA", label: "ИП на УСН, без НДС" },
-        { value: "14–30 дней", label: "гарантия после запуска" },
+        { value: "Самозанятость", label: "простой договор и чек" },
+        { value: "14 дней", label: "гарантия после запуска" },
       ],
       faqTitle: "Частые вопросы",
       faq: [
         {
-          question: "Нет текстов и фото — поможете?",
+          question: "Нет готовых текстов и фото — справимся?",
           answer:
-            "Да. Проведём короткое интервью на 30 минут, соберём факты и напишем тексты сами.",
+            "Да. Созвонимся на 20–30 минут, я сам соберу тексты из ваших ответов и подскажу, что просто снять на телефон.",
         },
         {
-          question: "Смогу ли менять цены и акции сам?",
+          question: "Смогу ли потом поменять цены или акцию?",
           answer:
-            "Да. Подключим простую админку или внесём мелкие правки по сообщению в Telegram в тот же день.",
+            "Да. Просто напишите мне в Telegram — мелкие правки цен, акций и контактов вношу быстро и без лишней волокиты.",
         },
         {
-          question: "Можно начать с лендинга, а потом расширить?",
+          question: "Как проходит оплата и какие документы?",
           answer:
-            "Да. Собираем сайт на компонентах — новые разделы и страницы добавляются без переделки.",
+            "Работаю официально как самозанятый: 50% до старта, 50% после приёмки. Подпишем простой договор и выдам официальный чек из «Мой налог».",
         },
         {
-          question: "Кому принадлежат код и домен?",
+          question: "Кому принадлежат сайт и домен?",
           answer:
-            "На 100% вам. Передаём Git, Figma и все доступы — без арендных платежей и привязки к студии.",
+            "На 100% вам. Домен оформляется на вас, отдаю все файлы и доступы — без ежемесячной аренды и привязки ко мне.",
         },
       ],
     },
     contact: {
       eyebrow: "04 / Контакт",
-      title: "Обсудим проект?",
-      sla: "Отвечаем в Telegram за 1–2 часа. Без навязчивых звонков.",
+      title: "Обсудим сайт?",
+      sla: "Отвечаю в Telegram за 1–2 часа. Без навязчивых звонков.",
       primaryCta: "Написать в Telegram",
       secondaryCta: "Оставить заявку",
       copyEmail: "Скопировать email",
@@ -443,23 +443,23 @@ export const content: Record<Lang, SiteContent> = {
     briefModal: {
       eyebrow: "Заявка",
       title: "Оставьте контакт.",
-      subtitle: "Ответим в Telegram или на почту за 1–2 часа в рабочее время.",
+      subtitle: "Напишу в Telegram или на почту за 1–2 часа в рабочее время.",
       slotPrefix: "Слот",
       clearSlotLabel: "Убрать",
       fields: {
         nameLabel: "Имя",
-        namePlaceholder: "Алексей",
+        namePlaceholder: "Артём",
         contactLabel: "Telegram, телефон или email",
         contactPlaceholder: "@username или +7 999...",
         serviceLabel: "Формат",
         serviceOptions: [
-          "Лендинг · Старт",
-          "Лендинг · Система",
-          "Сайт под запрос",
+          "Лендинг · Визитка",
+          "Лендинг · Под рекламу",
+          "Редизайн лендинга",
           "Пока не решил",
         ],
-        briefLabel: "О задаче (необязательно)",
-        briefPlaceholder: "Что продаёте и к какой дате нужен сайт?",
+        briefLabel: "О бизнесе (необязательно)",
+        briefPlaceholder: "Чем занимаетесь и в каком городе?",
         consentPrefix: "Согласен с ",
         consentLink: "Политикой ПДн (152-ФЗ)",
       },
@@ -476,7 +476,7 @@ export const content: Record<Lang, SiteContent> = {
         eyebrow: "Принято",
         title: "Заявка отправлена.",
         referenceLabel: "Номер",
-        body: "Свяжемся за 1–2 часа в рабочие дни (10:00–19:00 МСК).",
+        body: "Напишу за 1–2 часа в рабочие дни (10:00–19:00 МСК).",
         altCta: "Написать сразу в Telegram",
         doneLabel: "Готово",
       },
@@ -491,23 +491,23 @@ export const content: Record<Lang, SiteContent> = {
       sections: [
         {
           heading: "1. Общие положения",
-          body: "Настоящая политика определяет порядок обработки персональных данных пользователей сайта веб-студии A/09 в соответствии с Федеральным законом № 152-ФЗ.",
+          body: "Настоящая политика определяет порядок обработки персональных данных пользователей сайта A/09 в соответствии с Федеральным законом № 152-ФЗ.",
         },
         {
-          heading: "2. Какие данные мы собираем",
+          heading: "2. Какие данные собираются",
           body: "Только сведения из формы заявки: имя, контакт для связи (Telegram, телефон или email), выбранный формат и комментарий, если вы его указали.",
         },
         {
           heading: "3. Цель обработки",
-          body: "Данные используются только для ответа по вашему проекту, подготовки оценки и заключения договора. Мы не передаём контакты третьим лицам и не делаем рассылок.",
+          body: "Данные используются только для ответа по вашему сайту, оценки стоимости и подготовки простого договора. Контакты не передаются третьим лицам и не используются для рассылок.",
         },
         {
           heading: "4. Хранение и защита",
-          body: "Хранение и обработка данных заявок осуществляются в защищённой базе данных на территории РФ в соответствии с требованиями 152-ФЗ до завершения переписки или отзыва согласия.",
+          body: "Данные заявок хранятся ровно столько, сколько нужно для переписки и работы по проекту, либо до вашего запроса на удаление.",
         },
         {
           heading: "5. Удаление данных",
-          body: `Для удаления данных напишите на ${studioContact.email} с темой «Удаление данных» — выполним запрос за 3 рабочих дня.`,
+          body: `Для удаления данных напишите на ${studioContact.email} с темой «Удаление данных» — запрос будет выполнен за 3 рабочих дня.`,
         },
       ],
     },
@@ -515,15 +515,15 @@ export const content: Record<Lang, SiteContent> = {
 
   en: {
     meta: {
-      title: "A/09 — Landing Pages & Custom Websites",
+      title: "A/09 — Landing Pages for Local Businesses",
       description:
-        "High-converting landing pages from €2,200 in 2–4 weeks, plus custom websites on request. Clean Next.js code, Figma & 100% IP.",
+        "Clear, mobile-first landing pages for local businesses and independent specialists from €390 in 5–12 days.",
     },
     nav: {
-      descriptor: "WEB STUDIO",
+      descriptor: "LANDING PAGES",
       links: {
         formats: "Formats",
-        work: "Work",
+        work: "Slots",
         process: "Process",
         contact: "Contact",
       },
@@ -534,95 +534,95 @@ export const content: Record<Lang, SiteContent> = {
       langLabel: "Language",
     },
     hero: {
-      kicker: "Landing pages · custom websites",
-      titleLines: ["Landing pages", "built to", "convert."],
-      lead: "Fast launches for growing teams. Clean, scalable pages for B2B companies.",
+      kicker: "Landing pages for local businesses",
+      titleLines: ["Landing pages", "for local", "businesses."],
+      lead: "Helping local studios, shops, and independent specialists get inquiries from mobile and ads.",
       primaryCta: "Start a project",
       secondaryCta: "Book 15-min call",
       metrics: [
-        { value: "From €2,200", label: "start" },
-        { value: "2–4 weeks", label: "delivery" },
-        { value: "100% IP", label: "code & Figma" },
+        { value: "From €390", label: "start" },
+        { value: "5–12 days", label: "launch" },
+        { value: "50 / 50", label: "simple agreement" },
       ],
-      visualAlt: "Folded brushed titanium ribbon — visual mark of A/09 studio",
+      visualAlt: "Folded brushed titanium ribbon — visual mark of A/09",
     },
     formats: {
       eyebrow: "01 / Formats",
-      title: "What we build.",
+      title: "What I build.",
       items: [
         {
           id: "start",
-          name: "Launch Landing",
-          tagline: "Fast page for paid traffic or a new offer",
-          price: "from €2,200",
-          timeline: "10–14 days",
+          name: "Starter Landing",
+          tagline: "For an independent specialist or single local service",
+          price: "from €390",
+          timeline: "5–7 days",
           details:
-            "Offer structure, responsive code, analytics, lead forms, and full handover.",
-          tags: ["Copy & UI", "Mobile-first", "Analytics + forms"],
+            "4–5 focused sections: what you offer, pricing, examples of work, and one-tap booking.",
+          tags: ["Mobile-first", "Instant inquiries", "Ready in 1 week"],
         },
         {
           id: "system",
           flagship: true,
-          badge: "Flagship",
-          name: "Landing System",
-          tagline: "B2B & SaaS launches built to scale",
-          price: "from €4,200",
-          timeline: "2–4 weeks",
+          badge: "Main",
+          name: "Ad-Ready Landing",
+          tagline: "For local services running ads or Google/Maps traffic",
+          price: "from €690",
+          timeline: "7–12 days",
           details:
-            "Messaging prototype, Figma system, Next.js code, CRM & analytics — ready to expand.",
-          tags: ["Figma + Next.js", "CRM & tracking", "Modular scale"],
+            "Help shaping the copy, crisp mobile layout, basic analytics setup, and instant Telegram or email leads.",
+          tags: ["Copy help", "Analytics setup", "Fast 4G load"],
         },
         {
           id: "custom",
-          badge: "On request",
-          name: "Custom Website",
-          tagline: "Multi-page site, redesign, or CMS",
-          price: "from €7,500",
-          timeline: "4+ weeks",
+          badge: "Refresh",
+          name: "Landing Redesign",
+          tagline: "When an old one-pager looks dated or breaks on phones",
+          price: "from €550",
+          timeline: "7–10 days",
           details:
-            "Custom architecture, headless CMS, safe 301 SEO migration, and team handover.",
-          tags: ["Headless CMS", "301 SEO safe", "Full handover"],
+            "Rebuild your single-page site from scratch: clearer hierarchy, modern look, and fast mobile speed.",
+          tags: ["Fresh layout", "Mobile speed", "Domain setup"],
         },
       ],
       included:
-        "Every build includes: mobile-first UI · < 1.2s load · analytics · 100% code & Figma IP",
+        "Every landing page includes: mobile version · fast loading · instant inquiry form · 100% files & access yours",
       ctaLabel: "Discuss format",
     },
     work: {
       eyebrow: "02 / Work",
       title: "Open slots.",
-      lead: "Newly independent — zero fictional concepts. First 3 founding client slots are open.",
+      lead: "Newly independent — zero fictional concepts. First 3 local business slots are open at founding rates.",
       slots: [
         {
           id: "01",
           status: "open",
-          formatId: "start",
-          category: "Local & Service",
-          title: "Paid-search landing",
+          formatId: "system",
+          category: "Auto & Home",
+          title: "Detailing, repair, local trades",
           terms: "−15% founding rate",
         },
         {
           id: "02",
           status: "open",
-          formatId: "system",
-          category: "B2B & SaaS",
-          title: "Product launch page",
-          terms: "Senior hands-on · NDA or −15%",
+          formatId: "start",
+          category: "Beauty & Care",
+          title: "Salon, barbershop, solo specialist",
+          terms: "−15% founding rate",
         },
         {
           id: "03",
           status: "open",
           formatId: "custom",
-          category: "Redesign / Site",
-          title: "Custom build",
-          terms: "Free audit of current site",
+          category: "Local Business",
+          title: "Old landing page refresh",
+          terms: "Free review of your current page",
         },
       ],
       slotCta: "Claim slot",
       publishedCta: "Visit live site",
     },
     statement: {
-      kicker: "A/09 · BUILT FOR CLARITY",
+      kicker: "A/09 · FOR LOCAL BUSINESS",
       title: "Clear on mobile in 5 seconds.",
       alt: "A/09 stencil painted on architectural concrete",
     },
@@ -633,61 +633,61 @@ export const content: Record<Lang, SiteContent> = {
         {
           number: "01",
           duration: "Day 1",
-          title: "Scope call",
-          text: "Align on goals, lock price and timeline.",
+          title: "Quick call",
+          text: "Discuss your service, lock price and date.",
         },
         {
           number: "02",
-          duration: "Days 2–4",
-          title: "Prototype",
-          text: "We structure the page and write copy.",
+          duration: "Days 2–3",
+          title: "Structure",
+          text: "I help shape clear copy and sections.",
         },
         {
           number: "03",
-          duration: "Days 5–9",
+          duration: "Days 4–7",
           title: "Design",
-          text: "Hero concept first, then every screen.",
+          text: "Approve the hero first, then the rest.",
         },
         {
           number: "04",
-          duration: "Days 10–14",
+          duration: "Days 8–12",
           title: "Launch",
-          text: "Clean build, analytics, full Git & Figma.",
+          text: "Mobile build, lead form, full handover.",
         },
       ],
       guarantees: [
-        { value: "50 / 50", label: "milestone billing" },
-        { value: "Contract & NDA", label: "EU/INTL invoicing" },
-        { value: "14–30 days", label: "post-launch support" },
+        { value: "50 / 50", label: "milestone payment" },
+        { value: "Simple terms", label: "written agreement & receipt" },
+        { value: "14 days", label: "post-launch fixes" },
       ],
       faqTitle: "Quick answers",
       faq: [
         {
-          question: "No final copy or photos yet?",
+          question: "No final copy or professional photos yet?",
           answer:
-            "No problem. A 30-minute call gives us the facts to structure the page and write clear copy.",
+            "No problem. A 25-minute call gives me the facts to write clear copy, plus simple tips for phone photos.",
         },
         {
-          question: "Can we edit prices and text ourselves?",
+          question: "Can I update prices or offers later?",
           answer:
-            "Yes. We wire a clean headless CMS so marketing updates content without developer tickets.",
+            "Yes. Just message me directly — small price or contact edits are updated quickly without hassle.",
         },
         {
-          question: "Can a landing page expand into a full site?",
+          question: "How do payment and paperwork work?",
           answer:
-            "Yes. We build on modular Figma and React components so new pages plug in cleanly.",
+            "50% upfront to start, 50% after approval before launch, backed by a plain written agreement and receipt.",
         },
         {
-          question: "Who owns the code and domain?",
+          question: "Who owns the website and domain?",
           answer:
-            "100% yours. Full Git repo, Figma files, and hosting access — zero agency lock-in.",
+            "100% yours. Your domain stays under your name and all source files are handed over with zero lock-in.",
         },
       ],
     },
     contact: {
       eyebrow: "04 / Contact",
-      title: "Have a project?",
-      sla: "Replies within 24h on business days. Straight to the builders.",
+      title: "Need a landing page?",
+      sla: "Replies within 24h on business days. Direct message, no sales pitch.",
       primaryCta: "Start a project",
       secondaryCta: "Book 15-min call",
       copyEmail: "Copy email",
@@ -700,23 +700,23 @@ export const content: Record<Lang, SiteContent> = {
     briefModal: {
       eyebrow: "Inquiry",
       title: "Leave your contact.",
-      subtitle: "Replies within 24h on business days — straight to the builders.",
+      subtitle: "Direct reply within 24h on business days.",
       slotPrefix: "Slot",
       clearSlotLabel: "Remove",
       fields: {
         nameLabel: "Name",
-        namePlaceholder: "Alex Weber",
+        namePlaceholder: "Alex",
         contactLabel: "Email, Telegram, or phone",
-        contactPlaceholder: "you@company.com or @handle",
+        contactPlaceholder: "you@domain.com or @handle",
         serviceLabel: "Format",
         serviceOptions: [
-          "Launch Landing",
-          "Landing System",
-          "Custom Website",
+          "Starter Landing",
+          "Ad-Ready Landing",
+          "Landing Redesign",
           "Not sure yet",
         ],
-        briefLabel: "About the project (optional)",
-        briefPlaceholder: "What are you launching and by when?",
+        briefLabel: "About your business (optional)",
+        briefPlaceholder: "What service do you offer and in which city?",
         consentPrefix: "I agree to the ",
         consentLink: "Privacy Notice (GDPR)",
       },
@@ -733,7 +733,7 @@ export const content: Record<Lang, SiteContent> = {
         eyebrow: "Received",
         title: "Inquiry sent.",
         referenceLabel: "Ref",
-        body: "We'll reply within 24h on business days (Mon–Fri, CET).",
+        body: "I'll reply within 24h on business days.",
         altCta: "Book a 15-min call directly",
         doneLabel: "Done",
       },
@@ -748,23 +748,23 @@ export const content: Record<Lang, SiteContent> = {
       sections: [
         {
           heading: "1. Controller & Scope",
-          body: "This notice explains how A/09 Web Studio processes personal data submitted via our website under EU GDPR (Art. 6(1)(a) & Art. 6(1)(b)).",
+          body: "This notice explains how A/09 Studio processes personal data submitted via our website under EU GDPR (Art. 6(1)(a) & Art. 6(1)(b)).",
         },
         {
-          heading: "2. Data We Collect",
-          body: "Only what you submit in the inquiry form: your name, preferred contact (email, Telegram, or phone), selected format, and optional project note.",
+          heading: "2. Data Collected",
+          body: "Only what you submit in the inquiry form: your name, preferred contact (email, Telegram, or phone), selected format, and optional note.",
         },
         {
           heading: "3. Purpose",
-          body: "Used solely to respond to your inquiry, scope a project, or prepare an NDA and contract. We never sell data or send marketing emails.",
+          body: "Used solely to reply about your landing page, confirm pricing, and prepare a simple project agreement. Data is never sold or used for spam.",
         },
         {
           heading: "4. Retention",
-          body: "Records are stored securely only as long as required to handle your request and related correspondence, or until you ask us to delete them.",
+          body: "Records are kept only as long as needed to handle your inquiry and project, or until you ask for deletion.",
         },
         {
           heading: "5. Erasure & Rights",
-          body: `Email ${studioContact.email} with the subject "Data Deletion Request" to access, export, or erase your data within 3 business days.`,
+          body: `Email ${studioContact.email} with the subject "Data Deletion Request" to access or erase your data within 3 business days.`,
         },
       ],
     },
