@@ -35,7 +35,7 @@ export const studioContact = {
       taxNote: "Простой договор и официальный чек «Мой налог»",
       operatorNote:
         "Оператор ПДн: Студия A/09 (самозанятый, плательщик НПД) · реквизиты указываются в договоре · запросы по данным: hello@a09.studio",
-      location: "Работаю с локальным бизнесом по РФ",
+      location: "Работаем с локальным бизнесом по РФ",
     },
     en: {
       // Fill in your legal details before production launch
@@ -260,7 +260,7 @@ export const content: Record<Lang, SiteContent> = {
     meta: {
       title: "A/09 — Лендинги для локального бизнеса",
       description:
-        "Делаю понятные лендинги для малого бизнеса в вашем городе от 25\u00A0000\u00A0₽ за 5–12 дней. Мобильная версия, заявки в Telegram, самозанятость и чек.",
+        "Делаем понятные лендинги для малого бизнеса в вашем городе от 25\u00A0000\u00A0₽ за 5–12 дней. Мобильная версия, заявки в Telegram, самозанятость и чек.",
     },
     nav: {
       descriptor: "ЛЕНДИНГИ",
@@ -279,7 +279,7 @@ export const content: Record<Lang, SiteContent> = {
     hero: {
       kicker: "Лендинги для локального бизнеса",
       titleLines: ["Лендинги", "для бизнеса", "в вашем городе."],
-      lead: "Помогаю локальным студиям, сервисам и мастерам получать заявки с телефона и рекламы.",
+      lead: "Помогаем локальным студиям, сервисам и мастерам получать заявки с телефона и рекламы.",
       primaryCta: "Написать в Telegram",
       secondaryCta: "Оставить заявку",
       metrics: [
@@ -291,7 +291,7 @@ export const content: Record<Lang, SiteContent> = {
     },
     formats: {
       eyebrow: "01 / Форматы",
-      title: "Что делаю.",
+      title: "Что делаем.",
       items: [
         {
           id: "start",
@@ -312,7 +312,7 @@ export const content: Record<Lang, SiteContent> = {
           price: "от 45\u00A0000\u00A0₽",
           timeline: "7–12 дней",
           details:
-            "Помогу с текстами, сделаю чистый дизайн под телефон, подключу Яндекс.Метрику и заявки сразу в Telegram.",
+            "Поможем с текстами, сделаем чистый дизайн под телефон, подключим Яндекс.Метрику и заявки сразу в Telegram.",
           tags: ["Помощь с текстами", "Яндекс.Метрика", "Заявки в Telegram"],
         },
         {
@@ -323,7 +323,7 @@ export const content: Record<Lang, SiteContent> = {
           price: "от 35\u00A0000\u00A0₽",
           timeline: "7–10 дней",
           details:
-            "Пересоберу ваш одностраничник с нуля: понятная структура, современный вид и быстрая загрузка на мобильном.",
+            "Пересоберём ваш одностраничник с нуля: понятная структура, современный вид и быстрая загрузка на мобильном.",
           tags: ["Новый дизайн", "Скорость на 4G", "Перенос на домен"],
         },
       ],
@@ -334,7 +334,7 @@ export const content: Record<Lang, SiteContent> = {
     work: {
       eyebrow: "02 / Кейсы",
       title: "Стартовые слоты.",
-      lead: "Студия молодая — выдуманных кейсов не держу. Беру первые 3 локальных проекта на стартовых условиях.",
+      lead: "Студия молодая — выдуманных кейсов не держим. Берём первые 3 локальных проекта на стартовых условиях.",
       slots: [
         {
           id: "01",
@@ -383,7 +383,7 @@ export const content: Record<Lang, SiteContent> = {
           number: "02",
           duration: "2–3 дня",
           title: "Структура",
-          text: "Помогаю с текстами и порядком блоков.",
+          text: "Помогаем с текстами и порядком блоков.",
         },
         {
           number: "03",
@@ -408,29 +408,29 @@ export const content: Record<Lang, SiteContent> = {
         {
           question: "Нет готовых текстов и фото — справимся?",
           answer:
-            "Да. Созвонимся на 20–30 минут, я сам соберу тексты из ваших ответов и подскажу, что просто снять на телефон.",
+            "Да. Созвонимся на 20–30 минут, сами соберём тексты из ваших ответов и подскажем, что просто снять на телефон.",
         },
         {
           question: "Смогу ли потом поменять цены или акцию?",
           answer:
-            "Да. Просто напишите мне в Telegram — мелкие правки цен, акций и контактов вношу быстро и без лишней волокиты.",
+            "Да. Просто напишите нам в Telegram — мелкие правки цен, акций и контактов вносим быстро и без лишней волокиты.",
         },
         {
           question: "Как проходит оплата и какие документы?",
           answer:
-            "Работаю официально как самозанятый: 50% до старта, 50% после приёмки. Подпишем простой договор и выдам официальный чек из «Мой налог».",
+            "Работаем официально по самозанятости: 50% до старта, 50% после приёмки. Подпишем простой договор и выдадим официальный чек из «Мой налог».",
         },
         {
           question: "Кому принадлежат сайт и домен?",
           answer:
-            "На 100% вам. Домен оформляется на вас, отдаю все файлы и доступы — без ежемесячной аренды и привязки ко мне.",
+            "На 100% вам. Домен оформляется на вас, отдаём все файлы и доступы — без ежемесячной аренды и привязки к нам.",
         },
       ],
     },
     contact: {
       eyebrow: "04 / Контакт",
       title: "Обсудим сайт?",
-      sla: "Отвечаю в Telegram за 1–2 часа. Без навязчивых звонков.",
+      sla: "Отвечаем в Telegram за 1–2 часа. Без навязчивых звонков.",
       primaryCta: "Написать в Telegram",
       secondaryCta: "Оставить заявку",
       copyEmail: "Скопировать email",
@@ -443,7 +443,7 @@ export const content: Record<Lang, SiteContent> = {
     briefModal: {
       eyebrow: "Заявка",
       title: "Оставьте контакт.",
-      subtitle: "Напишу в Telegram или на почту за 1–2 часа в рабочее время.",
+      subtitle: "Напишем в Telegram или на почту за 1–2 часа в рабочее время.",
       slotPrefix: "Слот",
       clearSlotLabel: "Убрать",
       fields: {
@@ -476,7 +476,7 @@ export const content: Record<Lang, SiteContent> = {
         eyebrow: "Принято",
         title: "Заявка отправлена.",
         referenceLabel: "Номер",
-        body: "Напишу за 1–2 часа в рабочие дни (10:00–19:00 МСК).",
+        body: "Напишем за 1–2 часа в рабочие дни (10:00–19:00 МСК).",
         altCta: "Написать сразу в Telegram",
         doneLabel: "Готово",
       },
@@ -548,7 +548,7 @@ export const content: Record<Lang, SiteContent> = {
     },
     formats: {
       eyebrow: "01 / Formats",
-      title: "What I build.",
+      title: "What we build.",
       items: [
         {
           id: "start",
@@ -640,7 +640,7 @@ export const content: Record<Lang, SiteContent> = {
           number: "02",
           duration: "Days 2–3",
           title: "Structure",
-          text: "I help shape clear copy and sections.",
+          text: "We help shape clear copy and sections.",
         },
         {
           number: "03",
@@ -665,12 +665,12 @@ export const content: Record<Lang, SiteContent> = {
         {
           question: "No final copy or professional photos yet?",
           answer:
-            "No problem. A 25-minute call gives me the facts to write clear copy, plus simple tips for phone photos.",
+            "No problem. A 25-minute call gives us the facts to write clear copy, plus simple tips for phone photos.",
         },
         {
           question: "Can I update prices or offers later?",
           answer:
-            "Yes. Just message me directly — small price or contact edits are updated quickly without hassle.",
+            "Yes. Just message us directly — small price or contact edits are updated quickly without hassle.",
         },
         {
           question: "How do payment and paperwork work?",
@@ -733,7 +733,7 @@ export const content: Record<Lang, SiteContent> = {
         eyebrow: "Received",
         title: "Inquiry sent.",
         referenceLabel: "Ref",
-        body: "I'll reply within 24h on business days.",
+        body: "We'll reply within 24h on business days.",
         altCta: "Book a 15-min call directly",
         doneLabel: "Done",
       },
