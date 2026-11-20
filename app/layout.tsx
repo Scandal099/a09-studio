@@ -2,12 +2,13 @@ import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/onest";
 import "@fontsource-variable/jetbrains-mono";
 import "./globals.css";
+import { withBasePath } from "@/lib/paths";
 import { content } from "@/studio/content";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://a09.studio";
 const { title, description } = content.ru.meta;
 const ogImage = {
-  url: "/art/wall-wide.webp",
+  url: withBasePath("/art/wall-wide.webp"),
   width: 1672,
   height: 941,
   alt: content.ru.statement.alt,
@@ -18,17 +19,17 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: {
-    canonical: "/",
+    canonical: withBasePath("/"),
     languages: {
-      ru: "/",
-      en: "/en",
+      ru: withBasePath("/"),
+      en: withBasePath("/en"),
     },
   },
   openGraph: {
     title,
     description,
     type: "website",
-    url: "/",
+    url: withBasePath("/"),
     siteName: "A/09",
     locale: "ru_RU",
     alternateLocale: ["en_US"],
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
     description,
     images: [ogImage.url],
   },
-  icons: { icon: "/favicon.svg" },
+  icons: { icon: withBasePath("/favicon.svg") },
 };
 
 export const viewport: Viewport = {

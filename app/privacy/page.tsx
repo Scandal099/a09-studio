@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { withBasePath } from "@/lib/paths";
 import { content, studioContact } from "@/studio/content";
 
 export const metadata: Metadata = {
@@ -7,7 +8,7 @@ export const metadata: Metadata = {
   description:
     "Порядок обработки и защиты персональных данных веб-студии A/09 в соответствии с Федеральным законом № 152-ФЗ и EU GDPR.",
   alternates: {
-    canonical: "/privacy",
+    canonical: withBasePath("/privacy"),
   },
 };
 

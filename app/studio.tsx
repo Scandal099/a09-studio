@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { withBasePath } from "@/lib/paths";
 import {
   buildTelegramUrl,
   content,
@@ -244,12 +245,12 @@ function WallStatement({ lang }: { lang: Lang }) {
       <picture className="wall-picture">
         <source
           media="(orientation: portrait) and (max-width: 64rem)"
-          srcSet="/art/wall-portrait.webp"
+          srcSet={withBasePath("/art/wall-portrait.webp")}
           width={800}
           height={1421}
         />
         <img
-          src="/art/wall-wide.webp"
+          src={withBasePath("/art/wall-wide.webp")}
           loading="lazy"
           decoding="async"
           width={1672}
@@ -477,7 +478,7 @@ function ContactFooter({
                 WhatsApp
               </a>
             )}
-            <a href={t.privacyHref} className="footer-link">
+            <a href={withBasePath(t.privacyHref)} className="footer-link">
               {t.privacyLabel}
             </a>
             <span className="footer-copy">{t.copyright}</span>
@@ -523,7 +524,7 @@ export default function Studio({
   function handleLangChange(nextLang: Lang) {
     if (nextLang === lang) return;
     setLang(nextLang);
-    const targetPath = nextLang === "en" ? "/en" : "/";
+    const targetPath = withBasePath(nextLang === "en" ? "/en" : "/");
     const hash = window.location.hash || "";
     window.history.replaceState(null, "", `${targetPath}${hash}`);
   }

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { withBasePath } from "@/lib/paths";
 import { content } from "@/studio/content";
 import Studio from "./studio";
 
 const { title, description } = content.ru.meta;
 const ogImage = {
-  url: "/art/wall-wide.webp",
+  url: withBasePath("/art/wall-wide.webp"),
   width: 1672,
   height: 941,
   alt: content.ru.statement.alt,
@@ -14,17 +15,17 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: {
-    canonical: "/",
+    canonical: withBasePath("/"),
     languages: {
-      ru: "/",
-      en: "/en",
+      ru: withBasePath("/"),
+      en: withBasePath("/en"),
     },
   },
   openGraph: {
     title,
     description,
     type: "website",
-    url: "/",
+    url: withBasePath("/"),
     siteName: "A/09",
     locale: "ru_RU",
     alternateLocale: ["en_US"],

@@ -9,7 +9,14 @@ import {
   type ReactNode,
   type RefObject,
 } from "react";
-import { content, studioContact, type CaseSlot, type Lang } from "./content";
+import { IS_STATIC_EXPORT, withBasePath } from "@/lib/paths";
+import {
+  buildTelegramUrl,
+  content,
+  studioContact,
+  type CaseSlot,
+  type Lang,
+} from "./content";
 import {
   Arrow,
   CalendarIcon,
@@ -227,6 +234,7 @@ export function BriefDialog({
   const [submitError, setSubmitError] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
   const [reference, setReference] = useState("");
+  const [staticSummary, setStaticSummary] = useState("");
 
   useEffect(() => {
     nameRef.current?.focus();
@@ -301,12 +309,33 @@ export function BriefDialog({
 
     setStatus("sending");
 
+    const chosenService = service || t.fields.serviceOptions[0];
     const slotLabel = attachedSlot
       ? `${attachedSlot.id} · ${attachedSlot.category} (${attachedSlot.terms})`
       : "";
 
+    const fallbackSummary = [
+      lang === "ru"
+        ? `Заявка A/09 #${tokenRef.current.slice(0, 8).toUpperCase()}`
+        : `A/09 Inquiry #${tokenRef.current.slice(0, 8).toUpperCase()}`,
+      `${t.fields.nameLabel}: ${name.trim()}`,
+      `${t.fields.contactLabel}: ${contact.trim()}`,
+      `${t.fields.serviceLabel}: ${chosenService}`,
+      slotLabel ? `${t.slotPrefix}: ${slotLabel}` : "",
+      brief.trim() ? `${t.fields.briefLabel}: ${brief.trim()}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    if (IS_STATIC_EXPORT) {
+      setStaticSummary(fallbackSummary);
+      setReference(tokenRef.current.slice(0, 8).toUpperCase());
+      setStatus("sent");
+      return;
+    }
+
     try {
-      const response = await fetch("/api/inquiries", {
+      const response = await fetch(withBasePath("/api/inquiries"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -314,12 +343,19 @@ export function BriefDialog({
           lang,
           name: name.trim(),
           contact: contact.trim(),
-          service: service || t.fields.serviceOptions[0],
+          service: chosenService,
           brief: brief.trim(),
           slot: slotLabel,
           consent,
         }),
       });
+
+      if (response.status === 404 || response.status === 405) {
+        setStaticSummary(fallbackSummary);
+        setReference(tokenRef.current.slice(0, 8).toUpperCase());
+        setStatus("sent");
+        return;
+      }
 
       const data = (await response.json().catch(() => ({}))) as {
         reference?: string;
@@ -378,38 +414,83 @@ export function BriefDialog({
             <span>{t.success.referenceLabel}</span>
             <strong>#{reference}</strong>
           </p>
-          <p className="dialog-subtitle">{t.success.body}</p>
+          <p className="dialog-subtitle">
+            {staticSummary
+              ? lang === "ru"
+                ? "Заявка готова — нажмите кнопку ниже, чтобы сразу отправить её в Telegram."
+                : "Your inquiry is formatted — click below to send it directly by email."
+              : t.success.body}
+          </p>
           <div className="dialog-success-actions">
-            <button
-              type="button"
-              className="pill-btn pill-dark pill-lg"
-              onClick={closeModal}
-            >
-              {t.success.doneLabel}
-            </button>
-            {lang === "en"
-              ? studioContact.calUrl && (
+            {staticSummary ? (
+              <>
+                {lang === "en" && studioContact.email ? (
                   <a
-                    href={studioContact.calUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="pill-btn pill-outline-light pill-lg"
+                    href={`mailto:${studioContact.email}?subject=${encodeURIComponent(`A/09 Inquiry #${reference}`)}&body=${encodeURIComponent(staticSummary)}`}
+                    className="pill-btn pill-dark pill-lg"
                   >
-                    <CalendarIcon size={15} />
-                    <span>{t.success.altCta}</span>
+                    <ExternalLink size={15} />
+                    <span>Send via email</span>
                   </a>
-                )
-              : studioContact.telegramUrl && (
-                  <a
-                    href={studioContact.telegramUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="pill-btn pill-outline-light pill-lg"
-                  >
-                    <Telegram size={15} />
-                    <span>{t.success.altCta}</span>
-                  </a>
+                ) : (
+                  studioContact.telegramUrl && (
+                    <a
+                      href={buildTelegramUrl(staticSummary)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="pill-btn pill-dark pill-lg"
+                    >
+                      <Telegram size={15} />
+                      <span>
+                        {lang === "ru"
+                          ? "Отправить в Telegram"
+                          : "Send via Telegram"}
+                      </span>
+                    </a>
+                  )
                 )}
+                <button
+                  type="button"
+                  className="pill-btn pill-outline-light pill-lg"
+                  onClick={closeModal}
+                >
+                  {t.success.doneLabel}
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  className="pill-btn pill-dark pill-lg"
+                  onClick={closeModal}
+                >
+                  {t.success.doneLabel}
+                </button>
+                {lang === "en"
+                  ? studioContact.calUrl && (
+                      <a
+                        href={studioContact.calUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="pill-btn pill-outline-light pill-lg"
+                      >
+                        <CalendarIcon size={15} />
+                        <span>{t.success.altCta}</span>
+                      </a>
+                    )
+                  : studioContact.telegramUrl && (
+                      <a
+                        href={studioContact.telegramUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="pill-btn pill-outline-light pill-lg"
+                      >
+                        <Telegram size={15} />
+                        <span>{t.success.altCta}</span>
+                      </a>
+                    )}
+              </>
+            )}
           </div>
         </div>
       ) : (
@@ -682,7 +763,9 @@ export function PrivacyDialog({ lang, onClose }: PrivacyDialogProps) {
 
         <div className="privacy-footer">
           <a
-            href={lang === "en" ? "/privacy#en-privacy" : "/privacy"}
+            href={withBasePath(
+              lang === "en" ? "/privacy#en-privacy" : "/privacy"
+            )}
             className="pill-btn pill-outline-light pill-sm"
           >
             <span>{t.fullPageLabel}</span>

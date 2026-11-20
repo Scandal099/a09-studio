@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { withBasePath } from "@/lib/paths";
 import { content, studioContact, type Lang } from "./content";
 import {
   Arrow,
@@ -327,8 +328,8 @@ export function Hero({ lang, onOpenBrief }: HeroProps) {
               <span className="crosshair crosshair-br" aria-hidden="true" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/art/metal.webp"
-                srcSet="/art/metal-small.webp 768w, /art/metal.webp 1536w"
+                src={withBasePath("/art/metal.webp")}
+                srcSet={`${withBasePath("/art/metal-small.webp")} 768w, ${withBasePath("/art/metal.webp")} 1536w`}
                 sizes="(max-width: 64rem) 100vw, 46vw"
                 width={1536}
                 height={1024}
