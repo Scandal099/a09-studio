@@ -1,19 +1,58 @@
 import type { Metadata, Viewport } from "next";
+import "@fontsource-variable/onest";
+import "@fontsource-variable/jetbrains-mono";
 import "./globals.css";
+import { content } from "@/studio/content";
 
-const origin = "https://a09-digital-studio.brownmoose33.chatgpt.site";
-const description = "A/09 is an independent digital design and development studio. Explore selected concepts in web design, interactive experiences and digital products.";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://a09.studio";
+const { title, description } = content.ru.meta;
+const ogImage = {
+  url: "/art/wall-wide.webp",
+  width: 1672,
+  height: 941,
+  alt: content.ru.statement.alt,
+};
+
 export const metadata: Metadata = {
-  metadataBase: new URL(origin),
-  title: "A/09 — Independent Digital Studio",
+  metadataBase: new URL(siteUrl),
+  title,
   description,
-  alternates: { canonical: "/" },
-  openGraph: { title: "A/09 — Digital experiences with character.", description, type: "website", url: "/", images: [{ url: "/art/wall-wide.webp", width: 1672, height: 941, alt: "A/09 in spray paint on architectural concrete" }] },
-  twitter: { card: "summary_large_image", title: "A/09 — Independent Digital Studio", description, images: ["/art/wall-wide.webp"] },
+  alternates: {
+    canonical: "/",
+    languages: {
+      ru: "/",
+      en: "/en",
+    },
+  },
+  openGraph: {
+    title,
+    description,
+    type: "website",
+    url: "/",
+    siteName: "A/09",
+    locale: "ru_RU",
+    alternateLocale: ["en_US"],
+    images: [ogImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: [ogImage.url],
+  },
   icons: { icon: "/favicon.svg" },
 };
-export const viewport: Viewport = { themeColor: "#0b0b0b", width: "device-width", initialScale: 1 };
+
+export const viewport: Viewport = {
+  themeColor: "#0b0b0b",
+  width: "device-width",
+  initialScale: 1,
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return <html lang="en"><body>{children}</body></html>;
+  return (
+    <html lang="ru">
+      <body>{children}</body>
+    </html>
+  );
 }

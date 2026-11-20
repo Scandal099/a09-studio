@@ -1,118 +1,589 @@
 "use client";
+
 import { useEffect, useRef, useState } from "react";
+import {
+  buildTelegramUrl,
+  content,
+  studioContact,
+  type CaseSlot,
+  type FormatId,
+  type Lang,
+} from "@/studio/content";
+import { BriefDialog, PrivacyDialog } from "@/studio/dialogs";
 import { Header, Hero } from "@/studio/hero";
-import { projects, services, stages, studioContact, type Project } from "@/studio/content";
-import { Arrow, SectionLabel, Wordmark } from "@/studio/shared";
-import { Inquiry, ProjectDetail } from "@/studio/dialogs";
+import {
+  Arrow,
+  CalendarIcon,
+  Check,
+  Copy,
+  ExternalLink,
+  formatIdToServiceOption,
+  SectionEyebrow,
+  Telegram,
+  Wordmark,
+} from "@/studio/shared";
 
-function StudioSection() {
-  return <section id="studio" className="studio-section paper section-pad" aria-labelledby="studio-title">
-    <div className="studio-lead">
-      <SectionLabel>01 / Studio</SectionLabel>
-      <h2 id="studio-title">We don’t just build websites.<br /><span>We shape digital identities.</span></h2>
-      <p>Independent by design. A/09 brings strategy, visual identity and code together to give each business a digital form of its own.</p>
-      <a className="text-link" href="#approach">Our approach <Arrow size={17} /></a>
-    </div>
-    <div className="identity-materials">
-      <figure className="studio-wall"><img src="/art/wall.webp" width={667} height={409} alt="Original A/09 concrete wall and stencilled identity." /><figcaption>01—A / Environmental identity</figcaption></figure>
-      <figure className="studio-poster"><div><img src="/art/poster.webp" width={317} height={389} alt="Original A/09 poster, divided by a diagonal slash." /></div><figcaption>01—B / Print study</figcaption></figure>
-    </div>
-    <div className="studio-symbol"><div className="symbol-text" aria-label="A/09"><span>A</span><span>/</span><span>09</span></div><div><h3>The art of becoming.</h3><p>A for the first idea. A slash for transformation. Zero to nine, from a starting point to a finished form.</p></div></div>
-  </section>;
-}
+function FormatsSection({
+  lang,
+  onSelectFormat,
+}: {
+  lang: Lang;
+  onSelectFormat: (formatId: FormatId) => void;
+}) {
+  const t = content[lang].formats;
 
-function SelectedWork({ onSelect }: { onSelect: (project: Project) => void }) {
-  return <section className="work-section section-pad" id="work" aria-labelledby="work-title"><SectionLabel>02 / Projects</SectionLabel>
-    <div className="section-heading"><h2 id="work-title">Selected work</h2><span className="range">/ &nbsp;001—004</span></div>
-    <div className="work-grid">{projects.map(p => <button className={`work-card work-${p.look}`} key={p.id} onClick={() => onSelect(p)} aria-label={`View ${p.title} concept study`}>
-      <div className="project-image"><img src={p.image} alt={p.alt} loading="lazy" width={p.look === "poster" ? 317 : 1200} height={p.look === "poster" ? 389 : 800} />
-        {p.look === "terrain" && <span className="terrain-masthead" aria-hidden="true">Terrain Index<span>Field journal</span></span>}
-        <span className="view-case"><Arrow size={23} /></span>
+  return (
+    <section
+      id="formats"
+      className="section section-paper"
+      aria-labelledby="formats-title"
+    >
+      <div className="container">
+        <div className="section-head">
+          <SectionEyebrow>{t.eyebrow}</SectionEyebrow>
+          <h2 id="formats-title" className="section-title">
+            {t.title}
+          </h2>
+        </div>
+
+        <div className="formats-list">
+          {t.items.map((item, idx) => (
+            <details key={item.id} className="format-row">
+              <summary className="format-summary">
+                <span className="format-index">0{idx + 1} /</span>
+
+                <span className="format-main">
+                  <span className="format-name-line">
+                    <span className="format-name">{item.name}</span>
+                    {item.badge && (
+                      <span
+                        className={
+                          item.flagship
+                            ? "format-badge format-badge-solid"
+                            : "format-badge"
+                        }
+                      >
+                        {item.badge}
+                      </span>
+                    )}
+                  </span>
+                  <span className="format-tagline">{item.tagline}</span>
+                </span>
+
+                <span className="format-pricing">
+                  <span className="format-price">{item.price}</span>
+                  <span className="format-timeline">{item.timeline}</span>
+                </span>
+
+                <span className="format-toggle" aria-hidden="true" />
+              </summary>
+
+              <div className="format-panel">
+                <div className="format-panel-inner">
+                  <p className="format-details">{item.details}</p>
+                  <p className="format-tags">{item.tags.join(" · ")}</p>
+                  <div className="format-panel-cta">
+                    <button
+                      type="button"
+                      className="pill-btn pill-dark pill-md"
+                      onClick={() => onSelectFormat(item.id)}
+                    >
+                      <span>{t.ctaLabel}</span>
+                      <Arrow direction="right" size={15} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </details>
+          ))}
+        </div>
+
+        <p className="formats-included">{t.included}</p>
       </div>
-      <div className="project-caption"><span className="project-number">/{p.id}</span><div><h3>{p.title}</h3><p>{p.type} / {p.year}</p></div><span className="concept-tag">Concept study</span></div>
-      <span className="project-scope">{p.scope}</span>
-    </button>)}</div>
-  </section>;
+    </section>
+  );
 }
 
-function Expertise() {
-  const [opened, setOpened] = useState<number | null>(0);
-  const [hovered, setHovered] = useState<number | null>(null);
-  const active = hovered ?? opened;
-  return <section id="services" className="services-section paper section-pad" aria-labelledby="services-title">
-    <div className="services-heading"><SectionLabel>03 / Expertise</SectionLabel><h2 id="services-title">What we do.</h2></div>
-    <div className="services-list" onPointerLeave={() => setHovered(null)}>{services.map((s, i) => {
-      const expanded = i === active;
-      return <div className={expanded ? "service expanded" : "service"} key={s.title} onPointerEnter={e => { if (e.pointerType === "mouse" && window.matchMedia("(hover: hover)").matches) setHovered(i); }}>
-        <h3><button aria-expanded={expanded} aria-controls={`service-${i}`} id={`service-trigger-${i}`} onClick={() => { setOpened(opened === i ? null : i); setHovered(null); }} onKeyDown={e => { if (e.key === " " || e.key === "Enter") setHovered(null); }}><span className="service-number">0{i + 1} /</span>{s.title}<span className="disclosure" aria-hidden="true"><i /><i /></span></button></h3>
-        <div className="service-description" id={`service-${i}`} role="region" aria-labelledby={`service-trigger-${i}`} aria-hidden={!expanded}><div><p>{s.copy}</p></div></div>
-      </div>;
-    })}</div>
-  </section>;
+function SlotsSection({
+  lang,
+  onClaimSlot,
+}: {
+  lang: Lang;
+  onClaimSlot: (slot: CaseSlot) => void;
+}) {
+  const t = content[lang].work;
+  const hasTelegram = Boolean(studioContact.telegramUrl);
+
+  return (
+    <section
+      id="work"
+      className="section section-charcoal"
+      aria-labelledby="work-title"
+    >
+      <div className="container">
+        <div className="section-head">
+          <SectionEyebrow>{t.eyebrow}</SectionEyebrow>
+          <h2 id="work-title" className="section-title">
+            {t.title}
+          </h2>
+          <p className="section-lead">{t.lead}</p>
+        </div>
+
+        <div className="slots-grid">
+          {t.slots.map((slot) =>
+            slot.status === "published" ? (
+              <article key={slot.id} className="slot-card slot-card-published">
+                {slot.image && (
+                  <div className="slot-media">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={slot.image}
+                      alt={slot.imageAlt || slot.title}
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+
+                <div className="slot-top">
+                  <span className="slot-index">/{slot.id}</span>
+                  {(slot.client || slot.year) && (
+                    <span className="slot-status">
+                      {[slot.client, slot.year].filter(Boolean).join(" · ")}
+                    </span>
+                  )}
+                </div>
+
+                <h3 className="slot-category">{slot.title}</h3>
+                {slot.summary && <p className="slot-subtitle">{slot.summary}</p>}
+
+                {slot.metrics && slot.metrics.length > 0 && (
+                  <dl className="slot-metrics">
+                    {slot.metrics.map((m) => (
+                      <div key={m.label}>
+                        <dt>{m.label}</dt>
+                        <dd>{m.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                )}
+
+                <div className="slot-actions">
+                  {slot.liveUrl ? (
+                    <a
+                      href={slot.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="pill-btn pill-light pill-md pill-full"
+                    >
+                      <span>{t.publishedCta}</span>
+                      <ExternalLink size={14} />
+                    </a>
+                  ) : (
+                    <button
+                      type="button"
+                      className="pill-btn pill-light pill-md pill-full"
+                      onClick={() => onClaimSlot(slot)}
+                    >
+                      <span>{t.slotCta}</span>
+                      <Arrow direction="up-right" size={15} />
+                    </button>
+                  )}
+                </div>
+              </article>
+            ) : (
+              <article key={slot.id} className="slot-card">
+                <div className="slot-top">
+                  <span className="slot-index">/{slot.id}</span>
+                  <span className="slot-status">
+                    <span className="slot-dot" aria-hidden="true" />
+                    <span>{lang === "ru" ? "Открыт" : "Open"}</span>
+                  </span>
+                </div>
+
+                <h3 className="slot-category">{slot.category}</h3>
+                <p className="slot-subtitle">{slot.title}</p>
+                <p className="slot-terms">{slot.terms}</p>
+
+                <div className="slot-actions">
+                  <button
+                    type="button"
+                    className="pill-btn pill-light pill-md pill-full"
+                    onClick={() => onClaimSlot(slot)}
+                  >
+                    <span>{t.slotCta}</span>
+                    <Arrow direction="up-right" size={15} />
+                  </button>
+                  {lang === "ru" && hasTelegram && (
+                    <a
+                      href={buildTelegramUrl(
+                        `Здравствуйте! Интересует слот ${slot.id} — ${slot.category} (${slot.terms})`
+                      )}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="slot-tg-link"
+                    >
+                      <span>Telegram</span>
+                      <Arrow direction="up-right" size={13} />
+                    </a>
+                  )}
+                </div>
+              </article>
+            )
+          )}
+        </div>
+      </div>
+    </section>
+  );
 }
 
-function WallScene() {
-  return <section className="wall-sequence" aria-label="A/09 concrete identity campaign">
-    <div className="wall-stage"><picture className="wall-picture"><source media="(orientation: portrait) and (max-width: 1024px)" srcSet="/art/wall-portrait.webp" /><img src="/art/wall-wide.webp" loading="lazy" width={1672} height={941} alt="An A/09 stencil across concrete panels. A blurred pedestrian crosses the frame." /></picture>
-    <div className="wall-statement"><span className="mono">A/09 / Spatial study</span><h2>Not made to blend in.</h2></div><div className="wall-slash" aria-hidden="true" /></div>
-  </section>;
+function WallStatement({ lang }: { lang: Lang }) {
+  const t = content[lang].statement;
+
+  return (
+    <section className="wall-section" aria-labelledby="wall-title">
+      <picture className="wall-picture">
+        <source
+          media="(orientation: portrait) and (max-width: 64rem)"
+          srcSet="/art/wall-portrait.webp"
+          width={800}
+          height={1421}
+        />
+        <img
+          src="/art/wall-wide.webp"
+          loading="lazy"
+          decoding="async"
+          width={1672}
+          height={941}
+          alt={t.alt}
+          className="wall-img"
+        />
+      </picture>
+      <div className="wall-scrim" aria-hidden="true" />
+      <div className="container wall-content">
+        <p className="wall-kicker">{t.kicker}</p>
+        <h2 id="wall-title" className="wall-title">
+          {t.title}
+        </h2>
+      </div>
+    </section>
+  );
 }
 
-function Approach() {
-  return <section id="approach" className="approach-section paper section-pad" aria-labelledby="approach-title"><SectionLabel>04 / Approach</SectionLabel>
-    <div className="section-heading"><h2 id="approach-title">From zero to nine.</h2><span className="range">0 &nbsp;—&nbsp; 9</span></div>
-    <div className="process-grid">{stages.map((s, i) => <article key={s.name}><div className="stage-num">0{i + 1}<span> /</span></div><h3>{s.name}</h3><p>{s.text}</p></article>)}</div>
-  </section>;
+function ProcessSection({ lang }: { lang: Lang }) {
+  const t = content[lang].process;
+
+  return (
+    <section
+      id="process"
+      className="section section-paper"
+      aria-labelledby="process-title"
+    >
+      <div className="container">
+        <div className="section-head">
+          <SectionEyebrow>{t.eyebrow}</SectionEyebrow>
+          <h2 id="process-title" className="section-title">
+            {t.title}
+          </h2>
+        </div>
+
+        <ol className="process-grid">
+          {t.steps.map((step) => (
+            <li key={step.number} className="process-step">
+              <p className="process-meta">
+                <span>{step.number} /</span>
+                <span>{step.duration}</span>
+              </p>
+              <h3 className="process-step-title">{step.title}</h3>
+              <p className="process-step-text">{step.text}</p>
+            </li>
+          ))}
+        </ol>
+
+        <dl className="guarantees-grid">
+          {t.guarantees.map((item) => (
+            <div key={item.value} className="guarantee-item">
+              <dt className="guarantee-value">{item.value}</dt>
+              <dd className="guarantee-label">{item.label}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <div className="faq-block">
+          <h3 className="faq-heading">{t.faqTitle}</h3>
+          <div className="faq-list">
+            {t.faq.map((item) => (
+              <details key={item.question} className="faq-item">
+                <summary className="faq-summary">
+                  <span className="faq-question">{item.question}</span>
+                </summary>
+                <div className="faq-answer">
+                  <p>{item.answer}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
 
-function Contact({ onStart }: { onStart: () => void }) {
-  return <footer id="contact" className="contact-section"><div className="contact-content">
-    <SectionLabel>05 / Contact</SectionLabel><h2>Have something<br />in mind?</h2>
-    <div className="contact-cta"><p>Let’s make it real.</p><button className="primary-button" onClick={onStart}>Start a project <Arrow size={21} /></button></div>
-    {(studioContact.email || studioContact.socials.length > 0) && <div className="contact-links">{studioContact.email && <a href={`mailto:${studioContact.email}`}>{studioContact.email}</a>}{studioContact.socials.map(s => <a key={s.name} href={s.url}>{s.name}<Arrow size={15} /></a>)}</div>}
-    <div className="footer-line"><span>© A/09 Digital Studio</span><a href="#top">Back to top <Arrow direction="up" size={16} /></a></div>
-    </div><div className="footer-mark" aria-hidden="true"><Wordmark /></div></footer>;
-}
+function ContactFooter({
+  lang,
+  onOpenBrief,
+}: {
+  lang: Lang;
+  onOpenBrief: () => void;
+}) {
+  const t = content[lang].contact;
+  const [emailCopied, setEmailCopied] = useState(false);
+  const timerRef = useRef<number | null>(null);
 
-function useStudioMotion() {
-  const root = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    let disposed = false;
-    let revert: (() => void) | undefined;
-    const enabled = window.matchMedia("(prefers-reduced-motion: no-preference)");
-    if (!enabled.matches) return;
-    Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(([{ gsap }, { ScrollTrigger }]) => {
-      if (disposed) return;
-      gsap.registerPlugin(ScrollTrigger);
-      const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        const ctx = gsap.context(() => {
-          gsap.from(".symbol-text span", { x: (i: number) => (i - 1) * 34, scrollTrigger: { trigger: ".studio-symbol", start: "top 96%", end: "center 55%", scrub: true } });
-          const wall = gsap.timeline({ scrollTrigger: { trigger: ".wall-sequence", start: "top top", end: "bottom 50%", scrub: true } });
-          wall.to(".wall-picture", { scale: 1.15, ease: "none", duration: 0.7 }).to(".wall-picture", { scale: 1.78, ease: "power1.in", duration: 0.3 });
-          wall.fromTo(".wall-slash", { xPercent: -100 }, { xPercent: 105, ease: "none", duration: 0.19 }, 0.81);
-        }, root);
-        return () => ctx.revert();
-      });
-      revert = () => mm.revert();
-    });
-    return () => { disposed = true; revert?.(); };
+    return () => {
+      if (timerRef.current !== null) window.clearTimeout(timerRef.current);
+    };
   }, []);
-  return root;
+
+  async function copyEmail() {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(studioContact.email);
+      } else {
+        const helper = document.createElement("textarea");
+        helper.value = studioContact.email;
+        helper.setAttribute("readonly", "");
+        helper.style.position = "fixed";
+        helper.style.opacity = "0";
+        document.body.appendChild(helper);
+        helper.select();
+        document.execCommand("copy");
+        document.body.removeChild(helper);
+      }
+      setEmailCopied(true);
+      if (timerRef.current !== null) window.clearTimeout(timerRef.current);
+      timerRef.current = window.setTimeout(() => {
+        setEmailCopied(false);
+        timerRef.current = null;
+      }, 2400);
+    } catch {
+      setEmailCopied(false);
+    }
+  }
+
+  const hasTelegram = Boolean(studioContact.telegramUrl);
+  const hasCal = Boolean(studioContact.calUrl);
+  const hasWhatsapp = Boolean(studioContact.whatsappUrl);
+
+  return (
+    <footer id="contact" className="contact-footer">
+      <div className="container contact-inner">
+        <div className="contact-hero">
+          <SectionEyebrow>{t.eyebrow}</SectionEyebrow>
+          <h2 className="contact-title">{t.title}</h2>
+          <p className="contact-sla">{t.sla}</p>
+
+          <div className="contact-actions">
+            {lang === "ru" ? (
+              <>
+                {hasTelegram ? (
+                  <a
+                    href={studioContact.telegramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pill-btn pill-light pill-lg"
+                  >
+                    <Telegram size={16} />
+                    <span>{t.primaryCta}</span>
+                    <Arrow direction="up-right" size={15} />
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    className="pill-btn pill-light pill-lg"
+                    onClick={onOpenBrief}
+                  >
+                    <span>{t.secondaryCta}</span>
+                    <Arrow direction="up-right" size={15} />
+                  </button>
+                )}
+
+                {hasTelegram && (
+                  <button
+                    type="button"
+                    className="pill-btn pill-outline-dark pill-lg"
+                    onClick={onOpenBrief}
+                  >
+                    <span>{t.secondaryCta}</span>
+                  </button>
+                )}
+              </>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  className="pill-btn pill-light pill-lg"
+                  onClick={onOpenBrief}
+                >
+                  <span>{t.primaryCta}</span>
+                  <Arrow direction="up-right" size={15} />
+                </button>
+                {hasCal && (
+                  <a
+                    href={studioContact.calUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pill-btn pill-outline-dark pill-lg"
+                  >
+                    <CalendarIcon size={16} />
+                    <span>{t.secondaryCta}</span>
+                    <Arrow direction="up-right" size={15} />
+                  </a>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+
+        <div className="footer-bar">
+          <div className="footer-email-group">
+            <a
+              href={`mailto:${studioContact.email}`}
+              className="footer-email-link"
+            >
+              {studioContact.email}
+            </a>
+            <button
+              type="button"
+              className="copy-pill-btn"
+              onClick={copyEmail}
+            >
+              {emailCopied ? <Check size={14} /> : <Copy size={14} />}
+              <span>{emailCopied ? t.emailCopied : t.copyEmail}</span>
+            </button>
+            <span className="visually-hidden" aria-live="polite">
+              {emailCopied ? t.emailCopied : ""}
+            </span>
+          </div>
+
+          <div className="footer-meta-links">
+            {hasWhatsapp && (
+              <a
+                href={studioContact.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-link"
+              >
+                WhatsApp
+              </a>
+            )}
+            <a href={t.privacyHref} className="footer-link">
+              {t.privacyLabel}
+            </a>
+            <span className="footer-copy">{t.copyright}</span>
+            <a href="#top" className="footer-link footer-top-link">
+              <span>{t.backToTop}</span>
+              <Arrow direction="up" size={14} />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div className="footer-mark" aria-hidden="true">
+        <Wordmark />
+      </div>
+    </footer>
+  );
 }
 
-export default function Studio() {
-  const root = useStudioMotion();
-  const [detail, setDetail] = useState<Project | null>(null);
-  const [inquiry, setInquiry] = useState(false);
-  const startProject = () => { setDetail(null); setInquiry(true); };
-  return <div className="site" id="top" ref={root}>
-    <a className="skip-link" href="#main">Skip to content</a>
-    <div className="intro-curtain" aria-hidden="true"><Wordmark /></div>
-    <Header onStart={startProject} />
-    <main id="main"><Hero /><StudioSection /><SelectedWork onSelect={setDetail} /><Expertise /><WallScene /><Approach /></main>
-    <Contact onStart={startProject} />
-    {detail && <ProjectDetail project={detail} onClose={() => setDetail(null)} onStart={startProject} />}
-    {inquiry && <Inquiry onClose={() => setInquiry(false)} />}
-  </div>;
+export default function Studio({
+  initialLang = "ru",
+}: {
+  initialLang?: Lang;
+}) {
+  const [lang, setLang] = useState<Lang>(initialLang);
+  const [briefOpen, setBriefOpen] = useState(false);
+  const [defaultFormatId, setDefaultFormatId] = useState<FormatId | null>(null);
+  const [attachedSlot, setAttachedSlot] = useState<CaseSlot | null>(null);
+  const [privacyOpen, setPrivacyOpen] = useState(false);
+
+  const t = content[lang];
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+    document.title = t.meta.title;
+    const metaDesc = document.querySelector<HTMLMetaElement>(
+      'meta[name="description"]'
+    );
+    if (metaDesc) {
+      metaDesc.setAttribute("content", t.meta.description);
+    }
+  }, [lang, t.meta.title, t.meta.description]);
+
+  function handleLangChange(nextLang: Lang) {
+    if (nextLang === lang) return;
+    setLang(nextLang);
+    const targetPath = nextLang === "en" ? "/en" : "/";
+    const hash = window.location.hash || "";
+    window.history.replaceState(null, "", `${targetPath}${hash}`);
+  }
+
+  function openGeneralBrief() {
+    setDefaultFormatId(null);
+    setAttachedSlot(null);
+    setBriefOpen(true);
+  }
+
+  function openFormatBrief(formatId: FormatId) {
+    setDefaultFormatId(formatId);
+    setAttachedSlot(null);
+    setBriefOpen(true);
+  }
+
+  function openSlotBrief(slot: CaseSlot) {
+    setDefaultFormatId(slot.formatId);
+    setAttachedSlot(slot);
+    setBriefOpen(true);
+  }
+
+  const defaultServiceLabel = formatIdToServiceOption(defaultFormatId, lang);
+
+  return (
+    <div className="site" id="top">
+      <a className="skip-link" href="#main">
+        {t.nav.skipToContent}
+      </a>
+
+      <Header
+        lang={lang}
+        onLangChange={handleLangChange}
+        onOpenBrief={openGeneralBrief}
+      />
+
+      <main id="main" tabIndex={-1}>
+        <Hero lang={lang} onOpenBrief={openGeneralBrief} />
+        <FormatsSection lang={lang} onSelectFormat={openFormatBrief} />
+        <SlotsSection lang={lang} onClaimSlot={openSlotBrief} />
+        <WallStatement lang={lang} />
+        <ProcessSection lang={lang} />
+      </main>
+
+      <ContactFooter lang={lang} onOpenBrief={openGeneralBrief} />
+
+      {briefOpen && (
+        <BriefDialog
+          lang={lang}
+          defaultService={defaultServiceLabel}
+          attachedSlot={attachedSlot}
+          onClearSlot={() => setAttachedSlot(null)}
+          onOpenPrivacy={() => setPrivacyOpen(true)}
+          onClose={() => setBriefOpen(false)}
+        />
+      )}
+
+      {privacyOpen && (
+        <PrivacyDialog lang={lang} onClose={() => setPrivacyOpen(false)} />
+      )}
+    </div>
+  );
 }
