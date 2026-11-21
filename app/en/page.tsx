@@ -1,44 +1,27 @@
-import type { Metadata } from "next";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 import { withBasePath } from "@/lib/paths";
-import { content } from "@/studio/content";
-import Studio from "../studio";
 
-const { title, description } = content.en.meta;
-const ogImage = {
-  url: withBasePath("/art/wall-wide.webp"),
-  width: 1672,
-  height: 941,
-  alt: content.en.statement.alt,
-};
+export default function EnglishRedirectPage() {
+  if (process.env.STATIC_EXPORT !== "true") {
+    redirect("/");
+  }
 
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: {
-    canonical: withBasePath("/en"),
-    languages: {
-      ru: withBasePath("/"),
-      en: withBasePath("/en"),
-    },
-  },
-  openGraph: {
-    title,
-    description,
-    type: "website",
-    url: withBasePath("/en"),
-    siteName: "A/09",
-    locale: "en_US",
-    alternateLocale: ["ru_RU"],
-    images: [ogImage],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title,
-    description,
-    images: [ogImage.url],
-  },
-};
+  const target = withBasePath("/");
 
-export default function EnglishHomePage() {
-  return <Studio initialLang="en" />;
+  return (
+    <main className="container not-found-main">
+      <meta httpEquiv="refresh" content={`0;url=${target}`} />
+      <h1 className="not-found-title">Переход на главную А/09…</h1>
+      <p className="not-found-lead">
+        Англоязычная версия временно отключена. Если переход не произошёл
+        автоматически, нажмите кнопку ниже.
+      </p>
+      <div className="not-found-actions">
+        <Link href="/" className="pill-btn pill-light pill-lg">
+          Перейти на главную
+        </Link>
+      </div>
+    </main>
+  );
 }

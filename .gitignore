@@ -2,20 +2,16 @@
 /node_modules/
 /.pnp
 .pnp.*
-# Keep authored Yarn tooling if the project adopts Yarn.
-/.yarn/*
-!/.yarn/patches/
-!/.yarn/plugins/
-!/.yarn/releases/
-!/.yarn/versions/
 
 # Generated builds and framework state
 /dist/
 /.next/
-/.vinext/
 /out/
 next-env.d.ts
 *.tsbuildinfo
+
+# Local server inquiry logs (152-FZ personal data - NEVER commit)
+/data/
 
 # Test output
 /coverage/
@@ -28,14 +24,15 @@ yarn-error.log*
 
 # Local environment and keys
 .env*
+!.env.example
 .dev.vars*
 *.pem
 
-# Checkout-local tool state
+# Tool state & temporary artifacts
+/.openai/
 /.wrangler/
 /.sites-runtime/
-
-# Workspace scaffolding and publication archives
+/.vinext/
 /.agents/
 /.codex/
 /outputs/

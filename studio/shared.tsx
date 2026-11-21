@@ -1,10 +1,9 @@
 import type { ReactNode } from "react";
-import { content, type FormatId, type Lang } from "./content";
 
 export function Wordmark() {
   return (
     <span className="wordmark">
-      A<span className="wordmark-slash" aria-hidden="true">/</span>09
+      А<span className="wordmark-slash" aria-hidden="true">/</span>09
     </span>
   );
 }
@@ -18,6 +17,17 @@ export function SectionEyebrow({ children }: { children: ReactNode }) {
   );
 }
 
+const ARROW_ROTATION_CLASS: Record<
+  "up-right" | "right" | "down" | "up" | "left",
+  string
+> = {
+  "up-right": "icon icon-rot-up-right",
+  right: "icon",
+  down: "icon icon-rot-down",
+  up: "icon icon-rot-up",
+  left: "icon icon-rot-left",
+};
+
 export function Arrow({
   direction = "up-right",
   size = 16,
@@ -25,14 +35,6 @@ export function Arrow({
   direction?: "up-right" | "right" | "down" | "up" | "left";
   size?: number;
 }) {
-  const rotation = {
-    "up-right": -45,
-    right: 0,
-    down: 90,
-    up: -90,
-    left: 180,
-  }[direction];
-
   return (
     <svg
       aria-hidden="true"
@@ -40,8 +42,7 @@ export function Arrow({
       height={size}
       viewBox="0 0 20 20"
       fill="none"
-      className="icon"
-      style={rotation ? { transform: `rotate(${rotation}deg)` } : undefined}
+      className={ARROW_ROTATION_CLASS[direction]}
     >
       <path
         d="M4.25 10h11.5m-5-5 5 5-5 5"
@@ -130,7 +131,7 @@ export function Telegram({ size = 16 }: { size?: number }) {
   );
 }
 
-export function CalendarIcon({ size = 16 }: { size?: number }) {
+export function PhoneIcon({ size = 16 }: { size?: number }) {
   return (
     <svg
       aria-hidden="true"
@@ -140,20 +141,11 @@ export function CalendarIcon({ size = 16 }: { size?: number }) {
       fill="none"
       className="icon"
     >
-      <rect
-        x="3"
-        y="4.5"
-        width="14"
-        height="12.5"
-        rx="1.5"
-        stroke="currentColor"
-        strokeWidth="1.45"
-      />
       <path
-        d="M6.5 2.75v3M13.5 2.75v3M3 8.25h14"
+        d="M5.6 3.5h2.2l1.1 3.1-1.45 1.15a9.4 9.4 0 0 0 4.8 4.8l1.15-1.45 3.1 1.1v2.2a1.5 1.5 0 0 1-1.6 1.5C8.55 15.65 4.35 11.45 4.1 5.1A1.5 1.5 0 0 1 5.6 3.5Z"
         stroke="currentColor"
         strokeWidth="1.45"
-        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -218,15 +210,4 @@ export function ExternalLink({ size = 14 }: { size?: number }) {
       />
     </svg>
   );
-}
-
-export function formatIdToServiceOption(
-  formatId: FormatId | null,
-  lang: Lang
-): string {
-  const options = content[lang].briefModal.fields.serviceOptions;
-  if (formatId === "start") return options[0];
-  if (formatId === "system") return options[1];
-  if (formatId === "custom") return options[2];
-  return options[options.length - 1];
 }
